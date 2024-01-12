@@ -74,5 +74,20 @@ public class ProduitService {
 			throw new IllegalStateException("Le produit nexist pas.");
 		}
 	}
+	public void supprimer(Long id) {
+		boolean produitEx = false;
+
+		for (Produit produit : produits) {
+			if (produit.getId()==id) {
+				produitEx = true;
+				break;
+			}
+		}
+		if (produitEx) {
+			produits.removeIf(produit -> produit.getId()==id);
+		} else {
+			throw new IllegalStateException("Le produit n'existe pas.");
+		}
+	}
 
 }
