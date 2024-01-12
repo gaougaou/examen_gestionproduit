@@ -49,4 +49,37 @@ public class ProduitServiceTest {
     public void testSelectParIdNonExisting() {
         assertNull(produitService.SelectParId(2L));
     }
+    
+    @Test
+    public void testModifierProduit() {
+        Produit produit = new Produit(1L, "Tablette", 199.99, 8);
+        produitService.Ajouter(produit);
+
+        Produit modifiedProduit = new Produit(1L, "Tablette Pro", 299.99, 5);
+        produitService.Modifier(modifiedProduit);
+
+        assertEquals("Tablette Pro", produitService.SelectParId(1L).getNom());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testModifierProduitWithNegativeQuantity() {
+        Produit produit = new Produit(1L, "Clavier", 49.99, 20);
+        produitService.Ajouter(produit);
+
+        Produit modifiedProduit = new Produit(1L, "Clavier mécanique", 69.99, -5);
+        produitService.Modifier(modifiedProduit);
+    }
+    
+    @Test(expected = IllegalStateException.class)
+    public void testModifierNonExistingProduit() {
+        Produit produit = new Produit(1L, "Enceinte", 79.99, 15);
+        produitService.Modifier(produit); 
+    }
+
+
+
+    
+    
+    
+    
 }
